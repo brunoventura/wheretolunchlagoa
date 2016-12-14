@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+    </head>
+    <body>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/sha1.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
+        <script>
+            var restaurants = [
+                {
+                    name: 'Grilo',
+                    src: 'grilo.jpg',
+                    weight: 2
+                },
+                {
+                    name: 'Domo',
+                    src: 'grilo.jpg',
+                    weight: 3
+                },
+                {
+                    name: 'Wamaki',
+                    src: 'grilo.jpg',
+                    weight: 2
+                },
+                {
+                    name: 'Querubim',
+                    src: 'grilo.jpg',
+                    weight: 3
+                },
+                {
+                    name: 'Sanduicheria da Ilha',
+                    src: 'grilo.jpg',
+                    weight: 1
+                },
+                {
+                    name: 'Lagoa 315',
+                    src: 'grilo.jpg',
+                    weight: 1
+                },
+                {
+                    name: 'Pracinha',
+                    src: 'grilo.jpg',
+                    weight: 2
+                },
+                {
+                    name: 'Dom Zepe',
+                    src: 'grilo.jpg',
+                    weight: 1
+                }
+            ];
+
+            var restaurantWeight = restaurants.reduce((accumulator, item) => accumulator.concat(Array(item.weight).fill(item.name)), []);
+            var selected = restaurantWeight[CryptoJS.SHA1(moment().startOf('day').toISOString()).toString().split('').reduce((prev, cur) => prev + cur.codePointAt(0), 0) % restaurantWeight.length];
+        </script>
+    </body>
+</html>

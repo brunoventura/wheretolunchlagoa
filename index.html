@@ -3,56 +3,68 @@
     <head>
         <meta charset="utf-8">
         <title></title>
+
+        <link rel="stylesheet" href="styles.css" media="screen" charset="utf-8">
     </head>
     <body>
+        <div id="page-wrap">
+            <h1>Hoje é: <spam id="restaurant-name"></spam></h1>
+            <img id="restaurant-img" src="" alt="" />
+        </div>
+
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/sha1.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
         <script>
-            var restaurants = [
-                {
+        (() => {
+            var restaurants = {
+                grilo: {
                     name: 'Grilo',
                     src: 'grilo.jpg',
                     weight: 2
                 },
-                {
+                domo: {
                     name: 'Domo',
-                    src: 'grilo.jpg',
+                    src: 'domo.jpg',
                     weight: 3
                 },
-                {
+                wamaki: {
                     name: 'Wamaki',
-                    src: 'grilo.jpg',
+                    src: 'wamaki.jpg',
                     weight: 2
                 },
-                {
+                querubim: {
                     name: 'Querubim',
-                    src: 'grilo.jpg',
+                    src: 'querubim.jpg',
                     weight: 3
                 },
-                {
+                sandudailha: {
                     name: 'Sanduicheria da Ilha',
-                    src: 'grilo.jpg',
+                    src: 'sandudailha.jpg',
                     weight: 1
                 },
-                {
+                lagoa315: {
                     name: 'Lagoa 315',
-                    src: 'grilo.jpg',
+                    src: 'lagoa315.jpg',
                     weight: 1
                 },
-                {
+                pracinha: {
                     name: 'Pracinha',
-                    src: 'grilo.jpg',
+                    src: 'pracinha.jpg',
                     weight: 2
                 },
-                {
+                domzepe: {
                     name: 'Dom Zepe',
-                    src: 'grilo.jpg',
+                    src: 'domzepe.jpg',
                     weight: 1
                 }
-            ];
+            };
 
-            var restaurantWeight = restaurants.reduce((accumulator, item) => accumulator.concat(Array(item.weight).fill(item.name)), []);
+            var restaurantWeight = Object.keys(restaurants).reduce((accumulator, key) => accumulator.concat(Array(restaurants[key].weight).fill(key)), []);
             var selected = restaurantWeight[CryptoJS.SHA1(moment().startOf('day').toISOString()).toString().split('').reduce((prev, cur) => prev + cur.codePointAt(0), 0) % restaurantWeight.length];
+
+            document.querySelector('#restaurant-name').innerHTML = restaurants[selected].name;
+            document.querySelector('#restaurant-img').src = 'img/restaurants/' + restaurants[selected].src;
+        })();
         </script>
     </body>
 </html>

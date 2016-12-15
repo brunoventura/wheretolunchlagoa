@@ -23,3 +23,7 @@ html {
 #restaurant-name {
     font-size: 50px;
 }
+
+#restaurant-img {
+    max-width: 400px;
+}

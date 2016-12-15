@@ -1,29 +1,69 @@
 
 * { margin: 0; padding: 0; }
 
-html {
-	background: url(img/bg.jpg) no-repeat center center fixed;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
+body, html {
+    height: 100%;
+    font-family: sans-serif;
 }
 
-#page-wrap {
-    width: 400px;
-    margin: 50px auto;
-    padding: 20px;
-    background: white;
-    -moz-box-shadow: 0 0 20px black;
-    -webkit-box-shadow: 0 0 20px black;
-    box-shadow: 0 0 20px black;
+body {
+    display: flex;
+}
+.wrap {
+    margin: auto;
+}
+#title {
     text-align: center;
+    text-transform: uppercase;
+    font-size: 14px;
+    padding-bottom: 10px;
+}
+#page-wrap {
+    width: 500px;
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 7px 30px rgba(0,0,0,.2);
+}
+#page-wrap img {
+    width: 100%;
+    display: block;
 }
 
-#restaurant-name {
-    font-size: 50px;
+.figure {
+    position: relative;
 }
 
-#restaurant-img {
-    max-width: 400px;
+.lente {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.content {
+    padding: 35px;
+    text-align: left;
+    position: relative;
+    
+}
+.content h1 {
+    color: #bbb;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: .5em;
+    font-weight: normal;
+}
+
+.content h1 span {
+    letter-spacing: .1em;
+    display: block;
+    font-size: 34px;
+    padding-top: 15px;
+}
+.team {
+    width: 140px;
+    position: absolute;
+    right: 35px;
+    bottom: 40px;
 }

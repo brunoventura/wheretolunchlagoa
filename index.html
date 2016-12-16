@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+
+        <link rel="stylesheet" href="styles.css" media="screen" charset="utf-8">
+    </head>
+    <body>
+        <div class="wrap">
+            <h1 id="title">Restaurante do dia:</h1>
+            <div id="page-wrap">
+                <div class="figure">
+                    <img id="restaurant-img" src="" alt="" />
+                    <img class="lente" src="img/lente.png" alt="">
+                </div>
+                <div class="content">
+                    <h1>Hoje é <span id="restaurant-name"></span></h1>
+                    <select class="team" name="" id="">
+                        <option value="">Time</option>
+                        <option value="">Atd</option>
+                        <option value="">Int</option>
+                        <option value="">Cloud</option>
+                        <option value="">DC</option>
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/sha1.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
+        <script type="text/javascript" src="Vibrant.min.js"></script>
+        <script>
+        (() => {
+            var restaurants = {
+                domo: {
+                    name: 'Domo',
+                    src: 'domo.jpg',
+                    weight: 5
+                },
+                querubim: {
+                    name: 'Querubim',
+                    src: 'querubim.jpg',
+                    weight: 4
+                },
+                pracinha: {
+                    name: 'Pracinha',
+                    src: 'pracinha.jpg',
+                    weight: 4
+                },
+                grilo: {
+                    name: 'Grilo',
+                    src: 'grilo.jpg',
+                    weight: 3
+                },
+                wamaki: {
+                    name: 'Wamaki',
+                    src: 'wamaki.jpg',
+                    weight: 3
+                },
+                domzepe: {
+                    name: 'Dom Zepe',
+                    src: 'domzepe.jpg',
+                    weight: 2
+                },
+                marques: {
+                    name: 'Marques',
+                    src: 'marques.jpg',
+                    weight: 2
+                },
+                lagoa315: {
+                    name: 'Lagoa 315',
+                    src: '315.jpg',
+                    weight: 2
+                },
+                mineiro: {
+                    name: 'Mineiro',
+                    src: '315.jpg',
+                    weight: 1                
+                }, 
+                mercadosaojorge: {
+                    name: 'Mercado São Jorge',
+                    src: 'mercsjorge.jpg',
+                    weight: 1
+                },
+                bokas: {
+                    name: 'Bokas',
+                    src: 'bokas.jpg',
+                    weight: 1
+                },
+                sandudailha: {
+                    name: 'Sanduicheria da Ilha',
+                    src: 'sandudailha.jpg',
+                    weight: 1
+                }
+            };
+
+            var restaurantWeight = Object.keys(restaurants).reduce((accumulator, key) => accumulator.concat(Array(restaurants[key].weight).fill(key)), []);
+            var selected = restaurantWeight[CryptoJS.SHA1(moment().startOf('day').toISOString()).toString().split('').reduce((prev, cur) => prev + cur.codePointAt(0), 0) % restaurantWeight.length];
+
+            var srcImage = 'img/restaurants/' + restaurants[selected].src;
+
+            document.querySelector('#restaurant-name').innerHTML = restaurants[selected].name;
+            document.querySelector('#restaurant-img').src = srcImage;
+
+            var img = document.createElement('img');
+            img.setAttribute('src', srcImage)
+
+            img.addEventListener('load', function() {
+                var vibrant = new Vibrant(img);
+                var swatches = vibrant.swatches()
+                
+                document.querySelector('#restaurant-name').style.color = swatches.Vibrant.getHex();
+                document.querySelector('body').style.backgroundColor = swatches.Muted.getHex();
+                document.querySelector('#title').style.color = swatches.LightVibrant.getHex();
+
+            });
+
+        })();
+        </script>
+    </body>
+</html>

@@ -16,13 +16,18 @@
                 </div>
                 <div class="content">
                     <h1>Hoje é <span id="restaurant-name"></span></h1>
-                    <select class="team" name="" id="">
+                    <select class="team" name="" id="team">
                         <option value="">Time</option>
-                        <option value="">Atd</option>
-                        <option value="">Int</option>
-                        <option value="">Cloud</option>
-                        <option value="">DC</option>
-                        <option value=""></option>
+                        <option value="1">Atendimento</option>
+                        <option value="2">Integração</option>
+                        <option value="3">Cloud</option>
+                        <option value="4">DC</option>
+                        <option value="5">Platform</option>
+                        <option value="6">New Offers</option>
+                        <option value="7">Acquisition</option>
+                        <option value="8">OnSite</option>
+                        <option value="9">Poepleware</option>
+                        <option value="10">Financeiro</option>
                     </select>
                 </div>
             </div>
@@ -33,7 +38,9 @@
         <script type="text/javascript" src="Vibrant.min.js"></script>
         <script>
         (() => {
-            var restaurants = {
+            'use strict';
+
+            const restaurants = {
                 domo: {
                     name: 'Domo',
                     src: 'domo.jpg',
@@ -76,9 +83,9 @@
                 },
                 mineiro: {
                     name: 'Mineiro',
-                    src: '315.jpg',
-                    weight: 1                
-                }, 
+                    src: 'mineiro.jpg',
+                    weight: 1
+                },
                 mercadosaojorge: {
                     name: 'Mercado São Jorge',
                     src: 'mercsjorge.jpg',
@@ -96,27 +103,35 @@
                 }
             };
 
-            var restaurantWeight = Object.keys(restaurants).reduce((accumulator, key) => accumulator.concat(Array(restaurants[key].weight).fill(key)), []);
-            var selected = restaurantWeight[CryptoJS.SHA1(moment().startOf('day').toISOString()).toString().split('').reduce((prev, cur) => prev + cur.codePointAt(0), 0) % restaurantWeight.length];
+            const findRestaurant = modifier => {
+                const restaurantWeight = Object.keys(restaurants).reduce((accumulator, key) => accumulator.concat(Array(restaurants[key].weight).fill(key)), []);
+                const cryptoDay = CryptoJS.SHA1(moment().startOf('day').toISOString()).toString().split('').reduce((prev, cur) => prev + cur.codePointAt(0), 0);
+                const index = (cryptoDay * modifier || 1) % restaurantWeight.length;
+                const selected = restaurantWeight[index];
 
-            var srcImage = 'img/restaurants/' + restaurants[selected].src;
+                const srcImage = 'img/restaurants/' + restaurants[selected].src;
 
-            document.querySelector('#restaurant-name').innerHTML = restaurants[selected].name;
-            document.querySelector('#restaurant-img').src = srcImage;
+                document.querySelector('#restaurant-name').innerHTML = restaurants[selected].name;
+                document.querySelector('#restaurant-img').src = srcImage;
 
-            var img = document.createElement('img');
-            img.setAttribute('src', srcImage)
+                const img = document.createElement('img');
+                img.setAttribute('src', srcImage)
 
-            img.addEventListener('load', function() {
-                var vibrant = new Vibrant(img);
-                var swatches = vibrant.swatches()
-                
-                document.querySelector('#restaurant-name').style.color = swatches.Vibrant.getHex();
-                document.querySelector('body').style.backgroundColor = swatches.Muted.getHex();
-                document.querySelector('#title').style.color = swatches.LightVibrant.getHex();
+                img.addEventListener('load', function() {
+                    const vibrant = new Vibrant(img);
+                    const swatches = vibrant.swatches()
 
+                    document.querySelector('#restaurant-name').style.color = swatches.Vibrant.getHex();
+                    document.querySelector('body').style.backgroundColor = swatches.Muted.getHex();
+                    document.querySelector('#title').style.color = swatches.LightVibrant.getHex();
+                });
+            }
+
+            document.querySelector('#team').addEventListener('change', function() {
+                findRestaurant(this.value);
             });
 
+            findRestaurant();
         })();
         </script>
     </body>
